@@ -1,28 +1,105 @@
-<script src="index.js"></script>
-
-<h1>Weirdle</h1>
-
-<article id="grid"></article>
-
+<main id="screen">
+  <h1>Weirdle</h1>
+  <section id="grid"></section>
+  <section id="keyboard"></section>
+</main>
 <style>
   body, html {
-    background-color: #222;
+    background: #222;
     color: white;
     font-family: sans-serif;
     text-align: center;
     text-transform: uppercase;
   }
+  body, html, #screen {
+    height: 90vh;
+    width: 100%;
+  }
+  #screen {
+    display: flex;
+    flex-direction: column;
+  }
   h1 {
     font-size: 4em;
+    color: lime;
+    margin: 0;
+    animation: wavy 3s;
+  }
+  @keyframes wavy {
+  0%, 100% {
+    transform: translateX(0)
+  }
+  20% {
+    transform: translateX(-100px)
+  }
+  60% {
+    transform: translateX(100px);
+  }
+}
+  .button {
+    text-transform: uppercase;
+    padding: 15px;
+    margin: 3px;
+    border-radius: 5px;
+    height: 60px;
+    border: none;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+  }
+  #keyboard {
+    flex: none;
+    padding: 20px;
   }
   .tile {
     width: 1.2em;
     height: 1.2em;
     line-height: 1.2em;
-    border: 1px solid #aaa;
     display: inline-block;
     margin: 5px;
     font-size: 4em;
     font-weight: bold;
   }
+  .tile .front, .tile .back {
+    border: 2px solid #444;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .tile.solved .surface {
+    transform: rotateX(180deg);
+  }
+  .tile .surface {
+    transition-duration: 800ms;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .tile .front {
+    z-index: 2;
+  }
+  .tile .back {
+    z-index: 1;
+    transform: rotateX(180deg);
+  }
+  @keyframes press {
+    from {
+      opacity: 0.5;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 0.85;
+      transform: scale(1.1);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
 </style>
+<script src="index.js"></script>
